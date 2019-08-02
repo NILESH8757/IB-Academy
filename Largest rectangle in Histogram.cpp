@@ -24,7 +24,7 @@ int largestRectangleArea(vector<int> &A)
     return maxArea;
 }
 
-/*Another O(n) solution without stack */
+/*Another O(n) solution without stack. jump trick ;) */
 
 int largestRectangleArea(vector<int> &A) 
 {
