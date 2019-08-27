@@ -16,10 +16,15 @@ Example :
 
 vector<int> solve(string &s)
 {
-  const int n = s.size();
   const int mod = 1e9 + 7;
+  const int n = s.size();
+
+  // what dp[i][j] stores ?
+  // it stores the count of all even length palindromes whose first half characters are from 
+  // prefix of length i and second half characters are from suffix of length j
+  // for eg. for string "adxcdaa", dp[2][4] = 5 (2 for "adda" + 1 for "dd" + 2 for "aa")
   
-  vector<vector<int>> dp(n + 1, vector<int>(n + 1, 0)); // numbers with prefix and suffix lenght
+  vector<vector<int>> dp(n + 1, vector<int>(n + 1, 0)); 
 
   for (int prefLen = 1; prefLen <= n; prefLen++)
   {
@@ -33,8 +38,8 @@ vector<int> solve(string &s)
 
       if(lastPrefChar == firstSuffChar)
       {
-        int temp = 1 + // Match consisting of just firstSuffChar and lastPrefChar.
-                   dp[prefLen -1][suffLen - 1]; // All other matches that match firstSuffChar and lastPrefChar.
+        int temp = 1 + // palindrom consisting of just lastPrefChar and firstSuffChar.
+                   dp[prefLen -1][suffLen - 1]; // already calculated palindromes
         dp[prefLen][suffLen] = (dp[prefLen][suffLen]  + temp) % mod;
       }
     }
@@ -42,12 +47,11 @@ vector<int> solve(string &s)
 
   // Now that we have dp, we can calculate ans for each of the n positions.
   vector<int> ans;
-  
   for (int prefLen = 0; prefLen < n; prefLen++)
   {
     const int suffLen = n - 1 - prefLen;
-    ans.push_back(1 + // Matches where both subsequences from prefix and suffix are empty.
-                   dp[prefLen][suffLen] // All other subsequences centred around current pos.
+    ans.push_back(1 + // odd palindrom of length 1 by choosing just centre.
+                   dp[prefLen][suffLen] // All other palindromes centred around current pos.
                  );
   }
     
