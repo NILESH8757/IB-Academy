@@ -1,4 +1,4 @@
-// min subarray having maximum OR value in O(nlogn) time
+// minimum subarray having maximum OR value in O(nlogn) time
 #include<bits/stdc++.h>
  using namespace std;
 
